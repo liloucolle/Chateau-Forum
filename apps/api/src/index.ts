@@ -32,7 +32,7 @@ function requireAdmin(req: Request, res: Response, next: NextFunction) {
 const memberInput = z.object({ name: z.string().trim().min(1).max(80), role: z.string().trim().min(1).max(80), bio: z.string().max(600).default(''), order: z.number().int().default(0) });
 const eventInput = z.object({ title: z.string().trim().min(1).max(120), description: z.string().trim().min(1).max(3000), date: z.coerce.date(), location: z.string().trim().min(1).max(160), published: z.boolean() });
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
-app.get('/api/members', async (_req, res) => res.json(await db.member.findMany({ orderBy: [{ order: 'asc' }, { id: 'asc' }] })));
+app.get('/api/members', async (_req, res) => res.json(await db.member.findMany({ orderBy: { id: 'asc' } })));
 app.get('/api/events', async (_req, res) => {
   const events = await db.event.findMany({ where: { published: true }, orderBy: { date: 'asc' }, include: { reactions: true } });
   res.json(events.map(({ reactions, ...event }) => ({ ...event, interested: reactions.filter(r => r.type === 'INTERESTED').length })));

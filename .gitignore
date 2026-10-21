@@ -1,5 +1,14 @@
-node_modules
-.next
+# Environment variables (secrets)
 .env
-prisma/*.db*
-dist
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Next.js build
+.next/
+out/
+
+# Compiled files
+dist/
